@@ -12,13 +12,12 @@ let createConnString host user pass database =
 let tesetConnectionString = 
     createConnString "localhost" "postgres" "cctechnology" "marten_test"
 
-let getOptions (opt: StoreOptions) =
-    let connectionString = tesetConnectionString.ConnectionString
+let getOptions (connectionString : string) (opt: StoreOptions) =
     opt.Connection(connectionString)
     opt.Schema.For<User>().DocumentAlias "user" |> ignore
 
-//let getStore (connectionString : string) = connectionString |> DocumentStore.For
-let getStore (connectionString : string) = DocumentStore.For getOptions
+let getStore (connectionString : string) = 
+    connectionString |> getOptions|> DocumentStore.For
 
 let testStore = getStore tesetConnectionString.ConnectionString
 
