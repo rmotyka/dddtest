@@ -28,7 +28,7 @@ let create userName email =
         userName = userName
     }
 
-let save<'a> (store : IDocumentStore) (entity : 'a)=
+let save<'a> (store : IDocumentStore) (entity : 'a) =
     use session = store.OpenSession()
     session.Store(entity)
     session.SaveChanges()
@@ -36,3 +36,13 @@ let save<'a> (store : IDocumentStore) (entity : 'a)=
 
 let saveUser (user : User) =
     save testStore user
+
+type identifier = System.Guid
+
+let read (store : IDocumentStore) (id : int) =
+    use session = store.OpenSession()
+    session.Load id
+
+let loadUser (id : int) : User =
+    read testStore id
+    

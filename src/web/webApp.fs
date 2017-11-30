@@ -21,7 +21,9 @@ let userHandler email =
         match userMaybe with
         | Some user ->
             saveUser user |> ignore
-            text (user.id.ToString()) next ctx
+            let anotherUser = loadUser user.id
+            printfn "%A" anotherUser
+            text (anotherUser.id.ToString()) next ctx
         | None -> 
             text "No user" next ctx
             
