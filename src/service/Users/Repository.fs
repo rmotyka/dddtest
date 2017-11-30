@@ -28,11 +28,11 @@ let create userName email =
         userName = userName
     }
 
-let save (store : IDocumentStore) (user : User) =
+let save<'a> (store : IDocumentStore) (entity : 'a)=
     use session = store.OpenSession()
-    session.Store(user)
+    session.Store(entity)
     session.SaveChanges()
-    user
+    entity
 
 let saveUser (user : User) =
     save testStore user
